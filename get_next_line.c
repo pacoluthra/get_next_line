@@ -18,7 +18,22 @@ void	free_all(char *buffer)
 }
 char	*find_next(char *buffer)
 {
-	
+	int		i;
+	char	*line;
+
+	i = 0;
+	if (buffer == NULL)
+	{
+		free_all(buffer);
+		return (NULL);
+	}
+	while (buffer[i] != '\n')
+		i++;
+	line = ft_calloc(i, sizeof(char));
+
+
+
+	return (buffer);
 }
 
 char	*find_line(char *buffer)
@@ -31,7 +46,8 @@ char	*find_line(char *buffer)
 		free_all(buffer);
 		return (NULL);
 	}
-	i = ft_strlen(buffer);
+	while (buffer[i] != '\n')
+		i++;
 	line = ft_calloc(i, sizeof(char));
 	i = 0;
 	while (buffer[i])
@@ -51,17 +67,15 @@ char	*read_file(int fd, char *buffer)
 	if (buffer == NULL)
 		buffer = ft_calloc(1, 1);
 	result = ft_calloc(BUFFER_SIZE, sizeof(char));
-	bytes_read = 1;
-	while (bytes_read > 0)
+	while ((bytes_read = read(fd, result, BUFFER_SIZE)) > 0)
 	{
-		bytes_read = read(fd, result, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
 			free_all(result);
 			return (NULL);
 		}
 		if (ft_strchr(result, '\n'))
-			break ;
+			break;
 	}
 	return (buffer);
 }
