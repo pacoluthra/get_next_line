@@ -51,3 +51,34 @@ char    *ft_strjoin(char const *s1, char const *s2)
         return (join);
 }
 
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *) s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
+
+void	*ft_calloc(size_t nmemb, size_t size)
+{
+	unsigned char	*ptr;
+	size_t			i;
+
+	i = 0;
+	if (nmemb != 0 && (size > INT_MAX / nmemb))
+		return (NULL);
+	ptr = malloc(nmemb * size);
+	if (ptr == NULL)
+		return (NULL);
+	while (i < (nmemb * size))
+	{
+		ptr[i] = 0;
+		i++;
+	}
+	return (ptr);
+}
