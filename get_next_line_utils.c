@@ -12,43 +12,43 @@
 
 #include "get_next_line.h"
 
-size_t  ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-        size_t  i;
+	size_t	i;
 
-        i = 0;
-        while (str[i])
-                i++;
-        return (i);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-char    *ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-        int             s1_len;
-        int             s2_len;
-        int             i;
-        int             j;
-        char    *join;
+	int		s1_len;
+	int		s2_len;
+	int		i;
+	int		j;
+	char	*join;
 
-        s1_len = ft_strlen(s1);
-        s2_len = ft_strlen(s2);
-        i = 0;
-        j = 0;
-        join = (char *)malloc((s1_len + s2_len + 1) * (sizeof(char)));
-        if (join == NULL)
-                return (NULL);
-        while (s1[i])
-        {
-                join[i] = s1[i];
-                i++;
-        }
-        while (s2[j])
-        {
-                join[i + j] = s2[j];
-                j++;
-        }
-        join[i + j] = '\0';
-        return (join);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
+	i = 0;
+	j = 0;
+	join = (char *)malloc((s1_len + s2_len + 1) * (sizeof(char)));
+	if (join == NULL)
+		return (NULL);
+	while (s1[i])
+	{
+		join[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		join[i + j] = s2[j];
+		j++;
+	}
+	join[i + j] = '\0';
+	return (join);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -56,7 +56,7 @@ char	*ft_strchr(const char *s, int c)
 	while (*s)
 	{
 		if (*s == (char)c)
-			return ((char *) s);
+			return ((char *)s);
 		s++;
 	}
 	if ((char)c == '\0')

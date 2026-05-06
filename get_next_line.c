@@ -12,28 +12,36 @@
 
 #include "get_next_line.h"
 
-void	free_all(char *buffer)
+char	*free_n_join(char *buffer, char *result)
 {
+	char	*temp;
+
+	temp = ft_strjoin(buffer, result);
 	free(buffer);
+	return (temp);
 }
+
 char	*find_next(char *buffer)
 {
 	int		i;
+	int		j;
 	char	*line;
 
 	i = 0;
+	j = 0;
 	if (buffer == NULL)
 	{
-		free_all(buffer);
+		free(buffer);
 		return (NULL);
 	}
 	while (buffer[i] != '\n')
 		i++;
-	line = ft_calloc(i, sizeof(char));
-
-
-
-	return (buffer);
+	line = ft_calloc(ft_strlen(buffer) - i, sizeof(char));
+	i++;
+	while (buffer[i] != '\n')
+		line[j++] = buffer[i++];
+	free(buffer);
+	return (line);
 }
 
 char	*find_line(char *buffer)
@@ -43,12 +51,17 @@ char	*find_line(char *buffer)
 
 	if (buffer == NULL)
 	{
-		free_all(buffer);
+		free(buffer);
 		return (NULL);
 	}
 	while (buffer[i] != '\n')
 		i++;
 	line = ft_calloc(i, sizeof(char));
+	if (line == NULL)
+	{
+		free(line);
+		return (NULL);
+	}
 	i = 0;
 	while (buffer[i])
 	{
@@ -67,15 +80,24 @@ char	*read_file(int fd, char *buffer)
 	if (buffer == NULL)
 		buffer = ft_calloc(1, 1);
 	result = ft_calloc(BUFFER_SIZE, sizeof(char));
-	while ((bytes_read = read(fd, result, BUFFER_SIZE)) > 0)
+	if (result == NULL)
 	{
+		free(result);
+		return (NULL);
+	}
+	bytes_read = 1;
+	while (bytes_read > 0)
+	{
+		bytes_read = read(fd, result, BUFFER_SIZE);
 		if (bytes_read == -1)
 		{
-			free_all(result);
+			free(result);
 			return (NULL);
 		}
+		buffer[bytes_read] = 0;
+		free_n_join(buffer, result);
 		if (ft_strchr(result, '\n'))
-			break;
+			break ;
 	}
 	return (buffer);
 }
@@ -85,12 +107,12 @@ char	*get_next_line(int fd)
 	static char	*buffer;
 	char		*line;
 
-	// read until \n
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	buffer = read_file(fd, buffer);
-	// store everything after \n
+	if (buffer == NULL)
+		return (NULL);	
 	line = find_line(buffer);
-	// move to next line
 	buffer = find_next(buffer);
-	// return line
 	return (line);
 }
