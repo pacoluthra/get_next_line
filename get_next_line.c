@@ -83,10 +83,7 @@ char	*read_file(int fd, char *buffer)
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
-	// if (bytes_read == 0)
-	// 	return (free(result), free(buffer), NULL);
-	free(result);
-	return (buffer);
+	return (free(result), buffer);
 }
 
 char	*get_next_line(int fd)
