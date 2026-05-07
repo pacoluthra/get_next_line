@@ -48,7 +48,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	join[i + j] = '\0';
-	return (join);
+	return (free((char *)s1), join);
 }
 
 char	*ft_strchr(const char *s, int c)
