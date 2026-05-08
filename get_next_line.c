@@ -26,6 +26,8 @@ char	*find_next(char *buffer)
 		i++;
 	if (buffer[i] == '\0')
 		return (free(buffer), NULL);
+	if (buffer[i] == '\n')
+		i++;
 	line = ft_calloc(ft_strlen(buffer) - i + 1, sizeof(char));
 	if (line == NULL)
 		return (free(buffer), NULL);
@@ -42,7 +44,7 @@ char	*find_line(char *buffer)
 
 	i = 0;
 	if (buffer == NULL)
-		return (free(buffer), NULL);
+		return (NULL);
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	line = ft_calloc(i + 2, sizeof(char));
@@ -102,4 +104,3 @@ char	*get_next_line(int fd)
 	buffer = find_next(buffer);
 	return (line);
 }
-
