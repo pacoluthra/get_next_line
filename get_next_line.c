@@ -77,7 +77,7 @@ char	*read_file(int fd, char *buffer)
 	{
 		bytes_read = read(fd, result, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (free(result), free(buffer), NULL);
+			return (free(buffer), NULL);
 		result[bytes_read] = 0;
 		buffer = ft_strjoin(buffer, result);
 		if (buffer == NULL)
