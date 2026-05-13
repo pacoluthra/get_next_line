@@ -48,7 +48,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	join[i + j] = '\0';
-	return (free((char *)s1), join);
+	return (join);
 }
 
 char	*ft_strchr(const char *s, int c)
@@ -81,4 +81,11 @@ void	*ft_calloc(size_t nmemb, size_t size)
 		i++;
 	}
 	return (ptr);
+}
+
+char	*free_buffer(char **buffer)
+{
+	free(*buffer);
+	*buffer = NULL;
+	return (NULL);
 }
